@@ -50,7 +50,20 @@ class BuildingTest < Minitest::Test
 		assert_equal @renter2, @building.renter_with_highest_rent
 	end
 
-	
-	
+	def test_annual_breakdown
+		@building.add_unit(@unit1)
+                @building.add_unit(@unit2)
+                @building.add_unit(@unit3)
+                @unit2.add_renter(@renter1)
+		assert_equal 11988, @building.annual_breakdown.values[0]
+		assert_equal "Spencer", @building.annual_breakdown.key(11988)
+		@unit1.add_renter(@renter2)
+		assert_equal 14400, @building.annual_breakdown.values[0]
+		assert_equal 11988, @building.annual_breakdown.values[1]
+		assert_equal "Spencer", @building.annual_breakdown.key(11988)
+		assert_equal "Jessie", @building.annual_breakdown.key(14400)
+
+
+	end	
 end
 
